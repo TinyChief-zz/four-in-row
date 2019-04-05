@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PlayField from '@/components/PlayField'
-import HelloWorld from '@/components/HelloWorld'
+import PlayField from '@/components/PlayField.vue'
+import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
@@ -14,8 +14,8 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'Hello',
-      component: HelloWorld
+      name: 'Home',
+      component: Home
     }
   ]
 })

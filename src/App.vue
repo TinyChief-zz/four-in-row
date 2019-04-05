@@ -1,34 +1,23 @@
 <template>
   <div id="app">
-    <div class="container">
+    <my-header />
+    <div class="wrapper">
       <router-view/>
-
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import Header from '@/layout/Header.vue' // @ is an alias to /src
 
-export default {
+@Component({
   components: {
+    'my-header': Header
   }
-}
+})
+export default class App extends Vue {}
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-.container {
-  min-height: 100vh;
-  margin: 0 auto;
-  max-width: 960px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+<style lang="scss">
 </style>

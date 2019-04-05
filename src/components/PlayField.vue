@@ -36,7 +36,7 @@
 <script>
 export default {
   name: 'HelloWorld',
-  data() {
+  data () {
     return {
       styleObject: {
         gridTemplateColumns: null
@@ -54,7 +54,7 @@ export default {
     }
   },
   methods: {
-    handleClick(target) {
+    handleClick (target) {
       let columnClicked = target % this.totalColumns
       columnClicked = columnClicked === 0 ? this.totalColumns : columnClicked
       let fl = true
@@ -89,7 +89,7 @@ export default {
       // const totalRows = this.totalRows
       const totalFields = totalColumns * totalColumns
       const fd = this.fieldData
-      function checkRight() {
+      function checkRight () {
         // If placement field is last in a row
         if (placement % totalColumns === 0) {
           return
@@ -123,7 +123,7 @@ export default {
           inRow += 1
         }
       }
-      function checkLeft() {
+      function checkLeft () {
         // If placement field is first in a row
         if (placement % totalColumns === 1) {
           return
@@ -167,7 +167,7 @@ export default {
           inRow += 1
         }
       }
-      function checkBottom() {
+      function checkBottom () {
         if (
           placement + totalColumns < totalFields &&
           fd[placement - 1 + totalColumns][1] === player
@@ -190,7 +190,7 @@ export default {
           inColumn += 1
         }
       }
-      function checkTopRight() {
+      function checkTopRight () {
         if (placement % totalColumns === 0) {
           return
         }
@@ -226,7 +226,7 @@ export default {
           inSecondDiag += 1
         }
       }
-      function checkBottomLeft() {
+      function checkBottomLeft () {
         if (placement % totalColumns === 1) {
           return
         }
@@ -267,7 +267,7 @@ export default {
           inSecondDiag += 1
         }
       }
-      function checkTopLeft() {
+      function checkTopLeft () {
         if (placement % totalColumns === 1) {
           return
         }
@@ -304,7 +304,7 @@ export default {
           inFirstDiag += 1
         }
       }
-      function checkBottomRight() {
+      function checkBottomRight () {
         if (placement % totalColumns === 0) {
           return
         }
@@ -375,7 +375,7 @@ export default {
       // console.log(`In a row: ${inRow}\nIn a column: ${inColumn}`)
       // console.log(`In a first diagonal: ${inFirstDiag}\nIn a second diagonal: ${inSecondDiag}`)
     },
-    playAgain() {
+    playAgain () {
       this.winner = null
       this.domFields.forEach(el => {
         el.classList = ['field']
@@ -386,7 +386,7 @@ export default {
       this.turn = 'p1'
     }
   },
-  beforeMount() {
+  beforeMount () {
     for (let i = 0; i < this.totalColumns * this.totalRows; i++) {
       this.fieldData[i] = [false, 'p']
     }
@@ -394,7 +394,7 @@ export default {
       this.styleObject.gridTemplateColumns = `repeat(${this.totalColumns},auto)`
     })
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       this.domFields = document.querySelectorAll('.field')
     })
