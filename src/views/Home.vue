@@ -1,21 +1,48 @@
 <template>
   <div class="home">
-    <h2 class="page-header">Наши игры</h2>
+    <h2 class="page-header">Доступные игры</h2>
     <div class="container content-container">
-      <div class="row" v-for="(chunk, i) in splitEvery(2, games)" :key="i">
+      <div
+        class="row"
+        v-for="(chunk, i) in splitEvery(2, games.filter(el => !el.inDevelopment))"
+        :key="i"
+      >
         <div
           v-for="(game, j) in chunk"
           :key="j"
           class="content-item"
-          @click="handleSelectGame(game)"
+          @click="!game.inDevelopment && handleSelectGame(game.id)"
         >
           <div class="content-item__pic">
             <div v-if="game.inDevelopment" class="development">В разработке</div>
-            <img v-else src="../assets/images/4-in-a-row-online-1.png" alt="four-in-row">
+            <img v-else src="../assets/images/4-in-a-row-pic.png" alt="four-in-row">
           </div>
           <div class="content-item__main">
             <h3 class="name">{{ game.name }}</h3>
-            <p class="info">{{ game.info }}</p>
+            <!-- <p class="info">{{ game.info }}</p> -->
+            <p class="description">{{ game.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 class="page-header">Игры в разработке</h2>
+    <div class="container content-container">
+      <div
+        class="row"
+        v-for="(chunk, i) in splitEvery(2, games.filter(el => el.inDevelopment))"
+        :key="i"
+      >
+        <div
+          v-for="(game, j) in chunk"
+          :key="j"
+          class="content-item"
+        >
+          <div class="content-item__pic">
+            <div class="development">В разработке</div>
+          </div>
+          <div class="content-item__main">
+            <h3 class="name">{{ game.name }}</h3>
+            <!-- <p class="info">{{ game.info }}</p> -->
             <p class="description">{{ game.description }}</p>
           </div>
         </div>
@@ -28,42 +55,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld from '@/components/HelloWorld.vue'
 import { splitEvery } from 'ramda'
-
-const games: Game[] = [
-  {
-    name: 'Четыре в ряд',
-    info: '10 человек в игре, 3 человека ожидают',
-    description: 'Собери 4 фишки в ряд быстрее оппонента, чтобы выиграть.',
-    inDevelopment: false
-  },
-  {
-    name: 'Быки и коровы',
-    info: '10 человек в игре, 3 человека ожидают',
-    description:
-      'Постарайся первым отгадать трехзначное число с помощью специфичных подсказок.',
-    inDevelopment: true
-  },
-  {
-    name: 'Пинбол',
-    info: '10 человек в игре, 3 человека ожидают',
-    description:
-      'Защищай свои ворота и постарайся забить мяч в ворота оппонента.',
-    inDevelopment: true
-  },
-  {
-    name: 'Тетрис',
-    info: '10 человек в игре, 3 человека ожидают',
-    description: 'Покажи свои способности в складировании блоков.',
-    inDevelopment: true
-  }
-]
-
-interface Game {
-  readonly name: string
-  readonly info: string
-  readonly description: string
-  readonly inDevelopment: boolean
-}
+import { INFO_GAMES, INFO_SELECT_GAME } from '../store/const/'
+import { Game } from '@/types'
 
 @Component({
   components: {
@@ -74,31 +67,34 @@ export default class Home extends Vue {
   msg = 'Welcome to Your Vue.js + TypeScript App'
   splitEvery = splitEvery
 
-  games: Game[] = games
-  handleSelectGame (game: Game): void {
-    console.log(game)
+  games = this.$store.getters[INFO_GAMES]
+  handleSelectGame (id: number): void {
+    this.$store.dispatch(INFO_SELECT_GAME, id)
+    this.$store.state.modalIsSelecting = true
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .content-container {
+  margin-bottom: 30px;
   .row {
     flex-wrap: wrap;
     margin-bottom: 30px;
+    justify-content: space-between;
     &:last-of-type {
       margin-bottom: 0;
     }
   }
 }
 .content-item__pic {
-  min-width: 200px;
-  height: 140px;
+  min-width: 150px;
+  height: 120px;
   margin-right: 20px;
   position: relative;
   .development {
     position: absolute;
-    width: 100%;
+    width: 150px;
     height: 100%;
     background-color: rgba(rgb(237, 211, 255), 0.7);
     display: flex;
@@ -106,8 +102,8 @@ export default class Home extends Vue {
     align-items: center;
   }
   img {
-    height: 100%;
-    width: auto;
+    width: 150px;
+    height: auto;
   }
 }
 
@@ -118,13 +114,17 @@ export default class Home extends Vue {
     margin-bottom: 5px;
   }
   .info {
-    color: rgba(black, 0.6);
+    font-size: 14px;
     margin-bottom: 15px;
   }
 }
 
 .content-item {
+  padding: 15px;
+  background-color: var(--accent);
+  border-radius: 15px;
   display: flex;
-  width: 400px;
+  width: 450px;
+  cursor: pointer;
 }
 </style>

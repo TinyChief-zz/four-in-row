@@ -1,0 +1,11 @@
+export const INFO_GAMES = 'INFO_GAMES'
+export const INFO_SELECT_GAME = 'INFO_SELECT_GAME'
+export const INFO_SELECTED_GAME = 'INFO_SELECTED_GAME'
+export const INFO_UNSELECT_GAME = 'INFO_UNSELECT_GAME'
+
+export const SCORE_CURRENT = 'SCORE_CURRENT'
+export const SCORE_OVERALL = 'SCORE_OVERALL'
+export const CHANGE_SCORE = 'CHANGE_SCORE'
+
+export const MODAL_IS_SELECTING = 'MODAL_IS_SELECTING'
+// declare module 'const'
